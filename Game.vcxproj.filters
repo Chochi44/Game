@@ -50,5 +50,8 @@
     <ClInclude Include="GameControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pothole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

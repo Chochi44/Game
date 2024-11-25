@@ -145,6 +145,7 @@
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="Lane.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Pothole.h" />
     <ClInclude Include="Trash.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

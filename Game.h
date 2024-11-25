@@ -1,22 +1,27 @@
 #pragma once
 #include <iostream>
+#include <functional>
 #include <SFML/Graphics.hpp>
 #include "Lane.h"
 #include "Cart.h"
 #include "Trash.h"
+#include "Pothole.h"
 #include <list>
 
 class Game : public GameControl
 {
 	Cart* cart;
 	std::vector<Lane*>* lanes;
+	std::vector<sf::Sound*>* sounds;
 	sf::RenderWindow* window;
 	sf::Font* font;
+	std::vector<std::function<Obstacle*()>>* obstacleTypes;
 
 	float scrollPosition;
 
 public:
 	int score = 0;
+	int level = 0;
 	float laneWidth = 60.0f;
 	float cartWidth = 50.0f;
 	float cartHeight = 50.0f;
@@ -31,6 +36,9 @@ public:
 			window->close();
 		}
 
+		initSounds();
+		initObstacles();
+
 		this->window = window;
 		cart = new Cart(new sf::RectangleShape(sf::Vector2f(cartWidth, cartHeight)));
 		lanes = new std::vector<Lane*>();
@@ -40,19 +48,39 @@ public:
 		for (int i = 0; i < lanesNum; i++) {
 			Lane* lane = new Lane(new sf::Vector2f(laneWidth, window->getSize().y), cartPos + laneWidth * i);
 			lane->sprite->move(laneWidth * lanes->size(), 0.0f);
-			//switch (i)
-			//{
-			//case 0: lane->sprite->setFillColor(sf::Color::Green);
-			//	break;
-			//case 1: lane->sprite->setFillColor(sf::Color::Blue);
-			//	break;
-			//case 2: lane->shape->setFillColor(sf::Color::Red);
-			//	break;
-			//default:
-			//	break;
-			//}
-
 			lanes->push_back(lane);
+		}
+	}
+
+	void initSounds() {
+		sounds = new std::vector<sf::Sound*>();
+		loadSound("take.wav");
+		loadSound("crash.wav");
+	}
+
+	void initObstacles() {
+		obstacleTypes = new std::vector<std::function<Obstacle * ()>>();
+		obstacleTypes->push_back([&] {return new Trash(this); });
+		obstacleTypes->push_back([&] {return new Pothole(this); });
+	}
+
+	void loadSound(const std::string& filename) {
+		sf::SoundBuffer* buffer = new sf::SoundBuffer();
+
+		if (!buffer->loadFromFile(filename)) {
+			std::cout << filename << " not found!";
+			sounds->push_back(0);
+		}
+		else {
+			sf::Sound* sound = new sf::Sound(*buffer);
+			sounds->push_back(sound);
+		}
+	}
+
+	void playSound(int sound) {
+		auto s = sounds->at(sound);
+		if (s) {
+			s->play();
 		}
 	}
 
@@ -88,7 +116,7 @@ public:
 					obstacle->shape->setPosition(lane->objectPosition, pos);
 					window->draw(*obstacle->shape, sf::RenderStates::Default);
 					if (cart->collision(obstacle)) {
-						if (obstacle->colide(this)) {
+						if (obstacle->colide()) {
 							lane->obstacles->erase(lane->obstacles->begin() + j);
 							delete obstacle;
 						}
@@ -114,11 +142,13 @@ public:
 	void drawText() {
 		sf::Text text;
 		text.setFont(*font);
-		text.setString(std::to_string(score));
+		text.setString("Level: " + std::to_string(level) + " Score: " + std::to_string(score));
 		text.setCharacterSize(24); // in pixels, not points!
 
 		// set the color
 		text.setFillColor(sf::Color::White);
+		auto bounds = text.getLocalBounds();
+		text.setPosition(window->getSize().x - bounds.width - 5.0f, 5.0f);
 
 		window->draw(text);
 
@@ -146,8 +176,36 @@ public:
 		scrollPosition += 0.1f;
 	}
 
+	void checkLevel() {
+		int rem = 0;
+		for (auto lane : *lanes) {
+			rem += lane->obstacles->size();
+		}
+
+		if (rem == 0) {
+			levelUp();
+		}
+	}
+
+	void levelUp() {
+		level++;
+		generateLevel();
+	}
+
+	void generateLevel() {
+		auto levelPos = 0;
+		auto remObstacles = level * 5;
+		for (auto i = 0; i < remObstacles; i++) {
+			auto obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
+			obstacle->position = scrollPosition + levelPos;
+			lanes->at(rand() % lanes->size())->obstacles->push_back(obstacle);
+			levelPos += obstacle->shape->getLocalBounds().height + cartHeight + rand() % 500;
+		}
+	}
+
 	void addObstacle() {
-		auto obstacle = new Trash();
+		srand(time(0));
+		auto obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
 		obstacle->position = scrollPosition + 60;
 		lanes->at(0)->obstacles->push_back(obstacle);
 	}

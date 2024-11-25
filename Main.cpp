@@ -35,14 +35,7 @@ int main()
 			}
 		}
 
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		//{
-		//    game->moveCartLeft();
-		//}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		//{
-		//    game->moveCartRight();
-		//}
+		game->checkLevel();
 
 		game->scroll();
 		game->draw();

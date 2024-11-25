@@ -6,12 +6,13 @@
 class Trash : public Obstacle
 {
 public:
-    Trash() : Obstacle() {
-
+    Trash(GameControl* control) : Obstacle(control) {
+        sound = GameControl::TAKE;
     }
 
-    bool colide(GameControl* control) {
+    bool colide() {
         control->incrementScore(100);
+        playSound();
         return true;
     }
 };
