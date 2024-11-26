@@ -16,7 +16,7 @@ class Game : public GameControl
 	sf::RenderWindow* window;
 	sf::Font* font;
 	std::vector<std::function<Obstacle*()>>* obstacleTypes;
-
+	
 	float scrollPosition;
 
 public:
@@ -56,6 +56,7 @@ public:
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
 		loadSound("crash.wav");
+		loadSound("levelup.wav");
 	}
 
 	void initObstacles() {
@@ -189,6 +190,7 @@ public:
 
 	void levelUp() {
 		level++;
+		playSound(LEVELUP);
 		generateLevel();
 	}
 
