@@ -7,7 +7,7 @@ class Trash : public Obstacle
 {
 public:
     Trash(GameControl* control) : Obstacle(control) {
-        sound = GameControl::TAKE;
+        sound = GameControl::SOUND_TAKE;
     }
 
     bool colide() {

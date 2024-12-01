@@ -13,8 +13,11 @@ class Game : public GameControl
 	Cart* cart;
 	std::vector<Lane*>* lanes;
 	std::vector<sf::Sound*>* sounds;
+	std::vector<sf::Texture*>* textures;
 	sf::RenderWindow* window;
 	sf::Font* font;
+	sf::RectangleShape* titleShape;
+	sf::Text* gameOverText;
 	std::vector<std::function<Obstacle*()>>* obstacleTypes;
 	
 	float scrollPosition;
@@ -25,18 +28,12 @@ public:
 	float laneWidth = 60.0f;
 	float cartWidth = 50.0f;
 	float cartHeight = 50.0f;
+	bool title = true;
+	bool end = false;
 
 	Game(int lanesNum, sf::RenderWindow* window)
 	{
-		//Load font
-		font = new sf::Font();
-		if (!font->loadFromFile("tuffy.ttf"))
-		{
-			std::cout << "Font not found!";
-			window->close();
-		}
-
-		initSounds();
+		initAssets();
 		initObstacles();
 
 		this->window = window;
@@ -52,11 +49,33 @@ public:
 		}
 	}
 
-	void initSounds() {
+	void initAssets() {
+		textures = new std::vector<sf::Texture*>();
+		loadTexture("title.png");
+	
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
 		loadSound("crash.wav");
 		loadSound("levelup.wav");
+
+		//Load font
+		font = new sf::Font();
+		if (!font->loadFromFile("tuffy.ttf"))
+		{
+			std::cout << "Font not found!";
+			window->close();
+		}
+
+		titleShape = new sf::RectangleShape();
+		titleShape->setTexture(textures->at(GameControl::TEXTURE_TITLE));
+
+		gameOverText = new sf::Text();
+		gameOverText->setFont(*font);
+		gameOverText->setCharacterSize(50);
+		gameOverText->setOutlineColor(sf::Color::Yellow);
+		gameOverText->setFillColor(sf::Color::Red);
+		gameOverText->setOutlineThickness(3);
+		gameOverText->setString("GAME OVER!!!");
 	}
 
 	void initObstacles() {
@@ -65,8 +84,20 @@ public:
 		obstacleTypes->push_back([&] {return new Pothole(this); });
 	}
 
+	void loadTexture(const std::string& filename) {
+		auto texture = new sf::Texture();
+		if (!texture->loadFromFile(filename)) {
+			std::cout << filename << " not found";
+			textures->push_back(0);
+		}
+		else {
+			textures->push_back(texture);
+		}
+	}
+
+
 	void loadSound(const std::string& filename) {
-		sf::SoundBuffer* buffer = new sf::SoundBuffer();
+		auto buffer = new sf::SoundBuffer();
 
 		if (!buffer->loadFromFile(filename)) {
 			std::cout << filename << " not found!";
@@ -86,7 +117,7 @@ public:
 	}
 
 	void crash() {
-
+		end = true;
 	}
 	
 	void incrementScore(int value) {
@@ -100,10 +131,12 @@ public:
 		for (int i = 0; i < lanes->size(); i++) {
 			auto lane = lanes->at(i);
 
-			//Scroll lane texture
-			lane->sprite->move(0.0f, 0.05f);
-			if (lane->sprite->getPosition().y > 0) {
-				lane->sprite->move(0.0f, ( - 1 * lane->sprite->getGlobalBounds().height / 2) + fmodf(windowSize.y, lane->sprite->getTexture()->getSize().y));
+			if (!end) {
+				//Scroll lane texture
+				lane->sprite->move(0.0f, 0.05f);
+				if (lane->sprite->getPosition().y > 0) {
+					lane->sprite->move(0.0f, (-1 * lane->sprite->getGlobalBounds().height / 2) + fmodf(windowSize.y, lane->sprite->getTexture()->getSize().y));
+				}
 			}
 
 			//Draw lane
@@ -116,7 +149,7 @@ public:
 				if (pos > 0 && pos < window->getSize().y) {
 					obstacle->shape->setPosition(lane->objectPosition, pos);
 					window->draw(*obstacle->shape, sf::RenderStates::Default);
-					if (cart->collision(obstacle)) {
+					if (!end && cart->collision(obstacle)) {
 						if (obstacle->colide()) {
 							lane->obstacles->erase(lane->obstacles->begin() + j);
 							delete obstacle;
@@ -141,6 +174,7 @@ public:
 
 	//Draw text layer
 	void drawText() {
+		auto size = window->getSize();
 		sf::Text text;
 		text.setFont(*font);
 		text.setString("Level: " + std::to_string(level) + " Score: " + std::to_string(score));
@@ -149,9 +183,15 @@ public:
 		// set the color
 		text.setFillColor(sf::Color::White);
 		auto bounds = text.getLocalBounds();
-		text.setPosition(window->getSize().x - bounds.width - 5.0f, 5.0f);
+		text.setPosition(size.x - bounds.width - 5.0f, 5.0f);
 
 		window->draw(text);
+
+		if (end) {
+			auto bounds = gameOverText->getLocalBounds();
+			gameOverText->setPosition((size.x - bounds.width) / 2, (size.y - bounds.height) / 2);
+			window->draw(*gameOverText);
+		}
 
 	}
 
@@ -190,7 +230,7 @@ public:
 
 	void levelUp() {
 		level++;
-		playSound(LEVELUP);
+		playSound(SOUND_LEVELUP);
 		generateLevel();
 	}
 
@@ -205,11 +245,21 @@ public:
 		}
 	}
 
-	void addObstacle() {
-		srand(time(0));
-		auto obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
-		obstacle->position = scrollPosition + 60;
-		lanes->at(0)->obstacles->push_back(obstacle);
+	void drawTitle() {
+		auto size = window->getSize();
+		titleShape->setSize(sf::Vector2f(size.x, size.y));
+		window->draw(*titleShape);
+		window->display();
+	}
+
+	void start() {
+		score = 0;
+		level = 0;
+		title = false;
+		end = false;
+		for (auto lane : *lanes) {
+			lane->obstacles->clear();
+		}
 	}
 
 };

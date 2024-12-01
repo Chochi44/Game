@@ -23,22 +23,31 @@ int main()
 				window.close();
 
 			if (event.type == sf::Event::KeyReleased) {
-				if (event.key.code == sf::Keyboard::Left) {
-					game->moveCartLeft();
+				if (game->title || game->end) {
+					game->start();
 				}
-				else if (event.key.code == sf::Keyboard::Right) {
-					game->moveCartRight();
-				}
-				else if (event.key.code == sf::Keyboard::Space) {
-					game->addObstacle();
+				else {
+
+					if (event.key.code == sf::Keyboard::Left) {
+						game->moveCartLeft();
+					}
+					else if (event.key.code == sf::Keyboard::Right) {
+						game->moveCartRight();
+					}
 				}
 			}
 		}
 
-		game->checkLevel();
-
-		game->scroll();
-		game->draw();
+		if (game->title) {
+			game->drawTitle();
+		}
+		else {
+			if (!game->end) {
+				game->checkLevel();
+				game->scroll();
+			}
+			game->draw();
+		}
 	}
 
 

@@ -7,13 +7,13 @@ class Pothole : public Obstacle
 {
 public:
     Pothole(GameControl* control) : Obstacle(control) {
-        sound = GameControl::CRASH;
+        sound = GameControl::SOUND_CRASH;
         shape->setFillColor(sf::Color::Red);
     }
 
     bool colide() {
-        control->crash();
         playSound();
+        control->crash();
         return false;
     }
 };
