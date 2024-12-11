@@ -18,18 +18,20 @@ class Game : public GameControl
 	sf::Font* font;
 	sf::RectangleShape* titleShape;
 	sf::Text* gameOverText;
-	std::vector<std::function<Obstacle*()>>* obstacleTypes;
-	
+	std::vector<std::function<Obstacle* ()>>* obstacleTypes;
+
 	float scrollPosition;
 
 public:
 	int score = 0;
 	int level = 0;
+	float velocity = 0.05f;
 	float laneWidth = 60.0f;
 	float cartWidth = 50.0f;
 	float cartHeight = 50.0f;
 	bool title = true;
 	bool end = false;
+
 
 	Game(int lanesNum, sf::RenderWindow* window)
 	{
@@ -37,22 +39,36 @@ public:
 		initObstacles();
 
 		this->window = window;
-		cart = new Cart(new sf::RectangleShape(sf::Vector2f(cartWidth, cartHeight)));
+		cart = new Cart(this);
+		cartWidth = cart->texture->getSize().x;
+		cartHeight = cart->texture->getSize().y;
 		lanes = new std::vector<Lane*>();
 		float cartPos = (laneWidth - cartWidth) / 2;
-		cart->shape->move(cartPos, window->getSize().y - cartPos - cartWidth);
 
+		auto laneTexture = GameControl::TEXTURE_LEFT_SIDE;
+		auto lanePos = 0;
 		for (int i = 0; i < lanesNum; i++) {
-			Lane* lane = new Lane(new sf::Vector2f(laneWidth, window->getSize().y), cartPos + laneWidth * i);
-			lane->sprite->move(laneWidth * lanes->size(), 0.0f);
+			auto lane = new Lane(getTexture(laneTexture));
+			auto laneX = lane->texture->getSize().x;
+			lane->objectPosition = lanePos + (laneX - cartWidth) / 2;
+			lane->sprite->setTextureRect(sf::IntRect(0, 0, laneX, window->getSize().y * 2));
+			lane->sprite->move(lanePos, 0.0f);
+
+			lanePos += laneX;
 			lanes->push_back(lane);
+			laneTexture = i == lanesNum - 2 ? GameControl::TEXTURE_RIGHT_SIDE : GameControl::TEXTURE_LANE;
 		}
+		cart->sprite.move(lanes->at(0)->objectPosition, window->getSize().y - cartHeight);
 	}
 
 	void initAssets() {
 		textures = new std::vector<sf::Texture*>();
 		loadTexture("title.png");
-	
+		loadTexture("truck.png");
+		loadTexture("lane.png");
+		loadTexture("leftside.png");
+		loadTexture("rightside.png");
+
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
 		loadSound("crash.wav");
@@ -119,7 +135,7 @@ public:
 	void crash() {
 		end = true;
 	}
-	
+
 	void incrementScore(int value) {
 		score += value;
 	}
@@ -133,8 +149,9 @@ public:
 
 			if (!end) {
 				//Scroll lane texture
-				lane->sprite->move(0.0f, 0.05f);
+				lane->sprite->move(0.0f, velocity);
 				if (lane->sprite->getPosition().y > 0) {
+					std::cout << lane->sprite->getGlobalBounds().height;
 					lane->sprite->move(0.0f, (-1 * lane->sprite->getGlobalBounds().height / 2) + fmodf(windowSize.y, lane->sprite->getTexture()->getSize().y));
 				}
 			}
@@ -164,8 +181,7 @@ public:
 		}
 
 		//Draw cart
-		sf::Drawable* shape = cart->shape;
-		window->draw(*shape, sf::RenderStates::Default);
+		window->draw(cart->sprite, sf::RenderStates::Default);
 
 		drawText();
 
@@ -197,8 +213,8 @@ public:
 
 	void moveCartLeft() {
 		for (int i = lanes->size() - 1; i > -1; i--) {
-			if (cart->shape->getPosition().x > lanes->at(i)->objectPosition) {
-				cart->shape->setPosition(lanes->at(i)->objectPosition, cart->shape->getPosition().y);
+			if (cart->sprite.getPosition().x > lanes->at(i)->objectPosition) {
+				cart->sprite.setPosition(lanes->at(i)->objectPosition, cart->sprite.getPosition().y);
 				break;
 			}
 		}
@@ -206,15 +222,15 @@ public:
 
 	void moveCartRight() {
 		for (int i = 0; i < lanes->size(); i++) {
-			if (cart->shape->getPosition().x < lanes->at(i)->objectPosition) {
-				cart->shape->setPosition(lanes->at(i)->objectPosition, cart->shape->getPosition().y);
+			if (cart->sprite.getPosition().x < lanes->at(i)->objectPosition) {
+				cart->sprite.setPosition(lanes->at(i)->objectPosition, cart->sprite.getPosition().y);
 				break;
 			}
 		}
 	}
 
 	void scroll() {
-		scrollPosition += 0.1f;
+		scrollPosition += velocity;
 	}
 
 	void checkLevel() {
@@ -232,6 +248,7 @@ public:
 		level++;
 		playSound(SOUND_LEVELUP);
 		generateLevel();
+		velocity += 0.02f;
 	}
 
 	void generateLevel() {
@@ -257,9 +274,14 @@ public:
 		level = 0;
 		title = false;
 		end = false;
+		velocity = 0.05f;
 		for (auto lane : *lanes) {
 			lane->obstacles->clear();
 		}
+	}
+
+	sf::Texture* getTexture(int texture) {
+		return textures->at(texture);
 	}
 
 };

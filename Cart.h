@@ -5,17 +5,19 @@
 class Cart
 {
 public:
-	sf::Shape* shape;
-	sf::Shape* obstacle;
+	sf::Sprite sprite;
+	sf::Texture* texture;
 
-	Cart(sf::Shape* shape)
+	Cart(GameControl* control)
 	{
-		this->shape = shape;
+			texture = control->getTexture(GameControl::TEXTURE_CART);
+			auto size = texture->getSize();
+			sprite = sf::Sprite(*texture, sf::IntRect(0, 0, size.x, size.y));
 	}
 
 	bool collision(Obstacle* obstacle)
 	{
-		return shape->getGlobalBounds().intersects(obstacle->shape->getGlobalBounds());
+		return sprite.getGlobalBounds().intersects(obstacle->shape->getGlobalBounds());
 	}
 
 };
