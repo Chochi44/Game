@@ -7,23 +7,33 @@
 class Obstacle
 {
 public:
-	sf::Shape* shape;
+	sf::Sprite* sprite;
 	GameControl* control;
 
 	float position;
 	int sound = -1;
+	int texture = -1;
 
 	Obstacle(GameControl* control) {
 		this->control = control;
-		shape = new sf::RectangleShape(sf::Vector2f(50.0f, 50.0f));
-		shape->setFillColor(sf::Color::Black);
+		sprite = new sf::Sprite();
 	}
 
 	~Obstacle() {
-		delete shape;
+		delete sprite;
 	}
 
 	virtual bool colide() = 0;
+
+	Obstacle* loadTexture() {
+		if (texture > -1) {
+			auto t = control->getTexture(texture);
+			auto size = t->getSize();
+			sprite->setTextureRect(sf::IntRect(0, 0, size.x, size.y));
+			sprite->setTexture(*t);
+			return this;
+		}
+	}
 
 	void playSound() {
 		if (sound > -1) {

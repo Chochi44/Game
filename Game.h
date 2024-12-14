@@ -7,6 +7,10 @@
 #include "Trash.h"
 #include "Pothole.h"
 #include <list>
+#include "PaperTrash.h"
+#include "GlassTrash.h"
+#include "PlasticTrash.h"
+#include "OrganicTrash.h"
 
 class Game : public GameControl
 {
@@ -68,6 +72,11 @@ public:
 		loadTexture("lane.png");
 		loadTexture("leftside.png");
 		loadTexture("rightside.png");
+		loadTexture("box_trash.png");
+		loadTexture("pothole.png");
+		loadTexture("glass.png");
+		loadTexture("plastic.png");
+		loadTexture("banana.png");
 
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
@@ -96,8 +105,11 @@ public:
 
 	void initObstacles() {
 		obstacleTypes = new std::vector<std::function<Obstacle * ()>>();
-		obstacleTypes->push_back([&] {return new Trash(this); });
-		obstacleTypes->push_back([&] {return new Pothole(this); });
+		obstacleTypes->push_back([&] {return (new Pothole(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PaperTrash(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new GlassTrash(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PlasticTrash(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new OrganicTrash(this))->loadTexture(); });
 	}
 
 	void loadTexture(const std::string& filename) {
@@ -151,7 +163,6 @@ public:
 				//Scroll lane texture
 				lane->sprite->move(0.0f, velocity);
 				if (lane->sprite->getPosition().y > 0) {
-					std::cout << lane->sprite->getGlobalBounds().height;
 					lane->sprite->move(0.0f, (-1 * lane->sprite->getGlobalBounds().height / 2) + fmodf(windowSize.y, lane->sprite->getTexture()->getSize().y));
 				}
 			}
@@ -164,8 +175,8 @@ public:
 				auto obstacle = lane->obstacles->at(j);
 				auto pos = scrollPosition - obstacle->position;
 				if (pos > 0 && pos < window->getSize().y) {
-					obstacle->shape->setPosition(lane->objectPosition, pos);
-					window->draw(*obstacle->shape, sf::RenderStates::Default);
+					obstacle->sprite->setPosition(lane->objectPosition, pos);
+					window->draw(*obstacle->sprite, sf::RenderStates::Default);
 					if (!end && cart->collision(obstacle)) {
 						if (obstacle->colide()) {
 							lane->obstacles->erase(lane->obstacles->begin() + j);
@@ -258,7 +269,7 @@ public:
 			auto obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
 			obstacle->position = scrollPosition + levelPos;
 			lanes->at(rand() % lanes->size())->obstacles->push_back(obstacle);
-			levelPos += obstacle->shape->getLocalBounds().height + cartHeight + rand() % 500;
+			levelPos += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 500;
 		}
 	}
 

@@ -17,7 +17,7 @@ public:
 
 	bool collision(Obstacle* obstacle)
 	{
-		return sprite.getGlobalBounds().intersects(obstacle->shape->getGlobalBounds());
+		return sprite.getGlobalBounds().intersects(obstacle->sprite->getGlobalBounds());
 	}
 
 };

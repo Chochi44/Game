@@ -140,11 +140,15 @@
     <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OrganicTrash.h" />
+    <ClInclude Include="PaperTrash.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameControl.h" />
+    <ClInclude Include="GlassTrash.h" />
     <ClInclude Include="Lane.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="PlasticTrash.h" />
     <ClInclude Include="Pothole.h" />
     <ClInclude Include="Trash.h" />
   </ItemGroup>

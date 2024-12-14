@@ -11,6 +11,11 @@ public:
 	static const int TEXTURE_LANE = 2;
 	static const int TEXTURE_LEFT_SIDE = 3;
 	static const int TEXTURE_RIGHT_SIDE = 4;
+	static const int TEXTURE_BOX_TRASH = 5;
+	static const int TEXTURE_POTHOLE = 6;
+	static const int TEXTURE_GLASS_TRASH = 7;
+	static const int TEXTURE_PLASTIC_TRASH = 8;
+	static const int TEXTURE_ORGANIC_TRASH = 9;
 
 	virtual void crash() = 0;
 	virtual void incrementScore(int value) = 0;

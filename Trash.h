@@ -10,7 +10,7 @@ public:
         sound = GameControl::SOUND_TAKE;
     }
 
-    bool colide() {
+    bool colide() override {
         control->incrementScore(100);
         playSound();
         return true;

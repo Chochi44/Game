@@ -53,5 +53,17 @@
     <ClInclude Include="Pothole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PaperTrash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassTrash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlasticTrash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrganicTrash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
