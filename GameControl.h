@@ -23,6 +23,8 @@ public:
 	static const int TEXTURE_PAPER_PIECE = 14;
 	static const int TEXTURE_PLASTIC_STRAW = 15;
 	static const int TEXTURE_PLASTIC_UTENSILS = 16;
+	static const int TEXTURE_STOP_SIGN = 17;
+	static const int TEXTURE_CAR = 18;
 
 	virtual void crash() = 0;
 	virtual void incrementScore(int value) = 0;

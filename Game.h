@@ -18,6 +18,9 @@
 #include "PaperPiece.h"
 #include "PlasticStraw.h"
 #include "PlasticUtensils.h"
+#include "StopSign.h"
+#include "Car.h"
+
 
 class Game : public GameControl
 {
@@ -80,7 +83,7 @@ public:
 		loadTexture("leftside.png");
 		loadTexture("rightside.png");
 		loadTexture("paper box.png");
-		loadTexture("pothole.png");
+		loadTexture("hole.png");
 		loadTexture("glass cup.png");
 		loadTexture("plastic toy.png");
 		loadTexture("general trash.png");
@@ -91,6 +94,8 @@ public:
 		loadTexture("paper piece.png");
 		loadTexture("plastic straw.png");
 		loadTexture("plastic utensils.png");
+		loadTexture("stop sign.png");
+		loadTexture("car.png");
 
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
@@ -131,6 +136,8 @@ public:
 		obstacleTypes->push_back([&] {return (new PaperPiece(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new PlasticStraw(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new PlasticUtensils(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new StopSign(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new Car(this))->loadTexture(); });
 	}
 
 	void loadTexture(const std::string& filename) {
