@@ -7,10 +7,17 @@
 #include "Trash.h"
 #include "Pothole.h"
 #include <list>
-#include "PaperTrash.h"
-#include "GlassTrash.h"
-#include "PlasticTrash.h"
-#include "OrganicTrash.h"
+#include "PaperBox.h"
+#include "GlassCup.h"
+#include "PlasticToy.h"
+#include "GeneralTrash.h"
+#include "Apple.h"
+#include "Diper.h"
+#include "GlassBottle.h"
+#include "GlassShards.h"
+#include "PaperPiece.h"
+#include "PlasticStraw.h"
+#include "PlasticUtensils.h"
 
 class Game : public GameControl
 {
@@ -68,15 +75,22 @@ public:
 	void initAssets() {
 		textures = new std::vector<sf::Texture*>();
 		loadTexture("title.png");
-		loadTexture("truck.png");
+		loadTexture("general truck.png");
 		loadTexture("lane.png");
 		loadTexture("leftside.png");
 		loadTexture("rightside.png");
-		loadTexture("box_trash.png");
+		loadTexture("paper box.png");
 		loadTexture("pothole.png");
-		loadTexture("glass.png");
-		loadTexture("plastic.png");
-		loadTexture("banana.png");
+		loadTexture("glass cup.png");
+		loadTexture("plastic toy.png");
+		loadTexture("general trash.png");
+		loadTexture("general apple.png");
+		loadTexture("general diper.png");
+		loadTexture("glass bottle.png");
+		loadTexture("glass shards.png");
+		loadTexture("paper piece.png");
+		loadTexture("plastic straw.png");
+		loadTexture("plastic utensils.png");
 
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
@@ -106,10 +120,17 @@ public:
 	void initObstacles() {
 		obstacleTypes = new std::vector<std::function<Obstacle * ()>>();
 		obstacleTypes->push_back([&] {return (new Pothole(this))->loadTexture(); });
-		obstacleTypes->push_back([&] {return (new PaperTrash(this))->loadTexture(); });
-		obstacleTypes->push_back([&] {return (new GlassTrash(this))->loadTexture(); });
-		obstacleTypes->push_back([&] {return (new PlasticTrash(this))->loadTexture(); });
-		obstacleTypes->push_back([&] {return (new OrganicTrash(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PaperBox(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new GlassCup(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PlasticToy(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new GeneralTrash(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new Apple(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new Diper(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new GlassBottle(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new GlassShards(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PaperPiece(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PlasticStraw(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PlasticUtensils(this))->loadTexture(); });
 	}
 
 	void loadTexture(const std::string& filename) {

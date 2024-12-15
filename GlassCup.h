@@ -1,9 +1,9 @@
 #pragma once
 #include "Trash.h"
-class GlassTrash : public Trash
+class GlassCup : public Trash
 {
 public:
-	GlassTrash(GameControl* control) : Trash(control) {
+	GlassCup(GameControl* control) : Trash(control) {
 		texture = GameControl::TEXTURE_GLASS_TRASH;
 	}
 };

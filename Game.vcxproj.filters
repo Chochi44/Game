@@ -53,16 +53,37 @@
     <ClInclude Include="Pothole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PaperTrash.h">
+    <ClInclude Include="PaperBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlassTrash.h">
+    <ClInclude Include="GlassCup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlasticTrash.h">
+    <ClInclude Include="PlasticToy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrganicTrash.h">
+    <ClInclude Include="GeneralTrash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Diper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassBottle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassShards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PaperPiece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlasticStraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlasticUtensils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

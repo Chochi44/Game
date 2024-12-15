@@ -11,11 +11,18 @@ public:
 	static const int TEXTURE_LANE = 2;
 	static const int TEXTURE_LEFT_SIDE = 3;
 	static const int TEXTURE_RIGHT_SIDE = 4;
-	static const int TEXTURE_BOX_TRASH = 5;
+	static const int TEXTURE_PAPER_BOX = 5;
 	static const int TEXTURE_POTHOLE = 6;
 	static const int TEXTURE_GLASS_TRASH = 7;
-	static const int TEXTURE_PLASTIC_TRASH = 8;
-	static const int TEXTURE_ORGANIC_TRASH = 9;
+	static const int TEXTURE_PLASTIC_TOY = 8;
+	static const int TEXTURE_GENERAL_TRASH = 9;
+	static const int TEXTURE_GENERAL_APPLE = 10;
+	static const int TEXTURE_GENERAL_DIPER = 11;
+	static const int TEXTURE_GLASS_BOTTLE = 12;
+	static const int TEXTURE_GLASS_SHARDS = 13;
+	static const int TEXTURE_PAPER_PIECE = 14;
+	static const int TEXTURE_PLASTIC_STRAW = 15;
+	static const int TEXTURE_PLASTIC_UTENSILS = 16;
 
 	virtual void crash() = 0;
 	virtual void incrementScore(int value) = 0;

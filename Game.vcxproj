@@ -140,15 +140,22 @@
     <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OrganicTrash.h" />
-    <ClInclude Include="PaperTrash.h" />
+    <ClInclude Include="Apple.h" />
+    <ClInclude Include="Diper.h" />
+    <ClInclude Include="GeneralTrash.h" />
+    <ClInclude Include="GlassBottle.h" />
+    <ClInclude Include="GlassShards.h" />
+    <ClInclude Include="PaperBox.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameControl.h" />
-    <ClInclude Include="GlassTrash.h" />
+    <ClInclude Include="GlassCup.h" />
     <ClInclude Include="Lane.h" />
     <ClInclude Include="Obstacle.h" />
-    <ClInclude Include="PlasticTrash.h" />
+    <ClInclude Include="PaperPiece.h" />
+    <ClInclude Include="PlasticStraw.h" />
+    <ClInclude Include="PlasticToy.h" />
+    <ClInclude Include="PlasticUtensils.h" />
     <ClInclude Include="Pothole.h" />
     <ClInclude Include="Trash.h" />
   </ItemGroup>
