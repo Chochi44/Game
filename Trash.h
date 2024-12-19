@@ -15,5 +15,10 @@ public:
         playSound();
         return true;
     }
+
+    void missed() override {
+        control->incrementScore(-50);
+        control->playSound(GameControl::SOUND_MISSED);
+    }
 };
 

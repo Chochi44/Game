@@ -25,6 +25,10 @@ public:
 
 	virtual bool colide() = 0;
 
+	virtual void missed() {
+
+	}
+
 	Obstacle* loadTexture() {
 		if (texture > -1) {
 			auto t = control->getTexture(texture);

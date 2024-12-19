@@ -20,6 +20,9 @@
 #include "PlasticUtensils.h"
 #include "StopSign.h"
 #include "Car.h"
+#include "Trees.h"
+#include "Signs.h"
+#include "Bus.h"
 
 
 class Game : public GameControl
@@ -33,6 +36,7 @@ class Game : public GameControl
 	sf::RectangleShape* titleShape;
 	sf::Text* gameOverText;
 	std::vector<std::function<Obstacle* ()>>* obstacleTypes;
+	std::vector<std::function<Obstacle* ()>>* sideRoadObstacleTypes;
 
 	float scrollPosition;
 
@@ -49,6 +53,7 @@ public:
 
 	Game(int lanesNum, sf::RenderWindow* window)
 	{
+		srand(time(0));
 		initAssets();
 		initObstacles();
 
@@ -72,7 +77,7 @@ public:
 			lanes->push_back(lane);
 			laneTexture = i == lanesNum - 2 ? GameControl::TEXTURE_RIGHT_SIDE : GameControl::TEXTURE_LANE;
 		}
-		cart->sprite.move(lanes->at(0)->objectPosition, window->getSize().y - cartHeight);
+		cart->sprite.move(lanes->at(1)->objectPosition, window->getSize().y - cartHeight);
 	}
 
 	void initAssets() {
@@ -96,11 +101,20 @@ public:
 		loadTexture("plastic utensils.png");
 		loadTexture("stop sign.png");
 		loadTexture("car.png");
+		loadTexture("tree1.png");
+		loadTexture("tree2.png");
+		loadTexture("tree3.png");
+		loadTexture("sign1.png");
+		loadTexture("sign2.png");
+		loadTexture("sign3.png");
+		loadTexture("sign4.png");
+		//loadTexture("bus.png");
 
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
 		loadSound("crash.wav");
 		loadSound("levelup.wav");
+		loadSound("missed.wav");
 
 		//Load font
 		font = new sf::Font();
@@ -138,6 +152,17 @@ public:
 		obstacleTypes->push_back([&] {return (new PlasticUtensils(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new StopSign(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new Car(this))->loadTexture(); });
+		//obstacleTypes->push_back([&] {return (new Bus(this))->loadTexture(); });
+
+		sideRoadObstacleTypes = new std::vector<std::function<Obstacle * ()>>();
+		for (int i = 0; i < 90; i++) {
+			sideRoadObstacleTypes->push_back([&] {return (new Trees(this))->loadTexture(); });
+		}
+		for (int i = 0; i < 10; i++) {
+			sideRoadObstacleTypes->push_back([&] {return (new Signs(this))->loadTexture(); });
+		}
+		sideRoadObstacleTypes->push_back([&] {return (obstacleTypes->at(rand() % obstacleTypes->size()))()->loadTexture(); });
+
 	}
 
 	void loadTexture(const std::string& filename) {
@@ -202,7 +227,7 @@ public:
 			for (int j = lane->obstacles->size() - 1; j > -1; j--) {
 				auto obstacle = lane->obstacles->at(j);
 				auto pos = scrollPosition - obstacle->position;
-				if (pos > 0 && pos < window->getSize().y) {
+				if (pos > -obstacle->sprite->getLocalBounds().height && pos < window->getSize().y) {
 					obstacle->sprite->setPosition(lane->objectPosition, pos);
 					window->draw(*obstacle->sprite, sf::RenderStates::Default);
 					if (!end && cart->collision(obstacle)) {
@@ -214,6 +239,7 @@ public:
 				}
 				if (pos > window->getSize().y) {
 					lane->obstacles->erase(lane->obstacles->begin() + j);
+					obstacle->missed();
 					delete obstacle;
 				}
 			}
@@ -291,14 +317,57 @@ public:
 	}
 
 	void generateLevel() {
+		//Generating main obstacles
 		auto levelPos = 0;
 		auto remObstacles = level * 5;
 		for (auto i = 0; i < remObstacles; i++) {
+			auto lane = rand() % (lanes->size() - 2) + 1;
 			auto obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
 			obstacle->position = scrollPosition + levelPos;
-			lanes->at(rand() % lanes->size())->obstacles->push_back(obstacle);
+			lanes->at(lane)->obstacles->push_back(obstacle);
 			levelPos += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 500;
+			//Increase difficulty at level 3 
+			if (level > 2) {
+				auto lane2 = rand() % (lanes->size() - 2) + 1;
+				if (lane2 != lane) {
+					obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
+					obstacle->position = scrollPosition + levelPos + 50;
+					lanes->at(lane2)->obstacles->push_back(obstacle);
+
+				}
+				//Increase difficulty at level 5 
+				if (level > 4) {
+					auto lane3 = rand() % (lanes->size() - 2) + 1;
+					if (lane3 != lane && lane3 != lane2) {
+						obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
+						obstacle->position = scrollPosition + levelPos + 100;
+						lanes->at(lane3)->obstacles->push_back(obstacle);
+					}
+				}
+
+			}
 		}
+
+		//Generating left side obstacles
+		auto left = 0;
+		auto leftLane = lanes->at(0);
+		while (left < levelPos) {
+			auto obstacle = sideRoadObstacleTypes->at(rand() % sideRoadObstacleTypes->size())();
+			obstacle->position = scrollPosition + left;
+			leftLane->obstacles->push_back(obstacle);
+			left += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 300;
+		}
+
+		//Generating right side obstacles
+		auto right = 0;
+		auto rightLane = lanes->at(lanes->size()-1);
+		while (right < levelPos) {
+			auto obstacle = sideRoadObstacleTypes->at(rand() % sideRoadObstacleTypes->size())();
+			obstacle->position = scrollPosition + right;
+			rightLane->obstacles->push_back(obstacle);
+			right += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 300;
+		}
+
 	}
 
 	void drawTitle() {

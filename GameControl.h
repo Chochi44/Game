@@ -5,6 +5,7 @@ public:
 	static const int SOUND_TAKE = 0;
 	static const int SOUND_CRASH = 1;
 	static const int SOUND_LEVELUP = 2;
+	static const int SOUND_MISSED = 3;
 
 	static const int TEXTURE_TITLE = 0;
 	static const int TEXTURE_CART = 1;
@@ -25,6 +26,14 @@ public:
 	static const int TEXTURE_PLASTIC_UTENSILS = 16;
 	static const int TEXTURE_STOP_SIGN = 17;
 	static const int TEXTURE_CAR = 18;
+	static const int TEXTURE_TREE_1 = 19;
+	static const int TEXTURE_TREE_2 = 20;
+	static const int TEXTURE_TREE_3 = 21;
+	static const int TEXTURE_SIGN_1 = 22;
+	static const int TEXTURE_SIGN_2 = 23;
+	static const int TEXTURE_SIGN_3 = 24;
+	static const int TEXTURE_SIGN_4 = 25;
+	static const int TEXTURE_BUS = 26;
 
 	virtual void crash() = 0;
 	virtual void incrementScore(int value) = 0;

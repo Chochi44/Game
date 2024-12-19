@@ -5,13 +5,8 @@
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(500, 700), "SFML works!");
-	//sf::CircleShape shape(100.f);
-	sf::RectangleShape rect(sf::Vector2f(10.0f, 10.0f));
-	sf::Texture corgi;
-	corgi.loadFromFile("corgi.png");
-	rect.setTexture(&corgi);
 
-	Game* game = new Game(5, &window);
+	Game* game = new Game(7, &window);
 
 	while (window.isOpen())
 	{

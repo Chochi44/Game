@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apple.h" />
+    <ClInclude Include="Bus.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Diper.h" />
     <ClInclude Include="GeneralTrash.h" />
@@ -158,8 +159,10 @@
     <ClInclude Include="PlasticToy.h" />
     <ClInclude Include="PlasticUtensils.h" />
     <ClInclude Include="Pothole.h" />
+    <ClInclude Include="Signs.h" />
     <ClInclude Include="StopSign.h" />
     <ClInclude Include="Trash.h" />
+    <ClInclude Include="Trees.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
