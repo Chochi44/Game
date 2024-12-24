@@ -34,6 +34,7 @@ public:
 	static const int TEXTURE_SIGN_3 = 24;
 	static const int TEXTURE_SIGN_4 = 25;
 	static const int TEXTURE_BUS = 26;
+	static const int TEXTURE_PAPER_BOOK = 27;
 
 	virtual void crash() = 0;
 	virtual void incrementScore(int value) = 0;

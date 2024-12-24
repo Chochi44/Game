@@ -101,5 +101,8 @@
     <ClInclude Include="Bus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PaperBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

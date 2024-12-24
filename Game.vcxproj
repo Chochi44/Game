@@ -147,6 +147,7 @@
     <ClInclude Include="GeneralTrash.h" />
     <ClInclude Include="GlassBottle.h" />
     <ClInclude Include="GlassShards.h" />
+    <ClInclude Include="PaperBook.h" />
     <ClInclude Include="PaperBox.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Game.h" />

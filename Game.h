@@ -16,6 +16,7 @@
 #include "GlassBottle.h"
 #include "GlassShards.h"
 #include "PaperPiece.h"
+#include "PaperBook.h"
 #include "PlasticStraw.h"
 #include "PlasticUtensils.h"
 #include "StopSign.h"
@@ -101,14 +102,15 @@ public:
 		loadTexture("plastic utensils.png");
 		loadTexture("stop sign.png");
 		loadTexture("car.png");
-		loadTexture("tree1.png");
-		loadTexture("tree2.png");
-		loadTexture("tree3.png");
-		loadTexture("sign1.png");
-		loadTexture("sign2.png");
-		loadTexture("sign3.png");
-		loadTexture("sign4.png");
-		//loadTexture("bus.png");
+		loadTexture("tree 1.png");
+		loadTexture("tree 2.png");
+		loadTexture("tree 3.png");
+		loadTexture("sign 1.png");
+		loadTexture("sign 2.png");
+		loadTexture("sign 3.png");
+		loadTexture("sign 4.png");
+		loadTexture("bus.png");
+		loadTexture("paper book.png");
 
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
@@ -152,7 +154,8 @@ public:
 		obstacleTypes->push_back([&] {return (new PlasticUtensils(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new StopSign(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new Car(this))->loadTexture(); });
-		//obstacleTypes->push_back([&] {return (new Bus(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new Bus(this))->loadTexture(); });
+		obstacleTypes->push_back([&] {return (new PaperBook(this))->loadTexture(); });
 
 		sideRoadObstacleTypes = new std::vector<std::function<Obstacle * ()>>();
 		for (int i = 0; i < 90; i++) {
