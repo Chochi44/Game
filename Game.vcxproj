@@ -133,11 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cart.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Lane.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apple.h" />
@@ -147,6 +143,7 @@
     <ClInclude Include="GeneralTrash.h" />
     <ClInclude Include="GlassBottle.h" />
     <ClInclude Include="GlassShards.h" />
+    <ClInclude Include="Island.h" />
     <ClInclude Include="PaperBook.h" />
     <ClInclude Include="PaperBox.h" />
     <ClInclude Include="Cart.h" />

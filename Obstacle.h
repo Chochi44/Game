@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "GameControl.h"
+#include "Cart.h"
 
 class Obstacle
 {
@@ -29,6 +30,26 @@ public:
 
 	}
 
+	virtual void draw() {
+		control->getWindow()->draw(*sprite, sf::RenderStates::Default);
+	}
+
+	virtual int getHeight() {
+		return sprite->getLocalBounds().height;
+	}
+
+	virtual int getWidth() {
+		return sprite->getLocalBounds().width;
+	}
+
+	virtual void setPosition(float x, float y) {
+		sprite->setPosition(x, y);
+	}
+
+	virtual bool isComplex() {
+		return false;
+	}
+
 	Obstacle* loadTexture() {
 		if (texture > -1) {
 			auto t = control->getTexture(texture);
@@ -43,6 +64,11 @@ public:
 		if (sound > -1) {
 			control->playSound(sound);
 		}
+	}
+
+	virtual bool collision(Cart* cart)
+	{
+		return sprite->getGlobalBounds().intersects(cart->sprite.getGlobalBounds());
 	}
 };
 

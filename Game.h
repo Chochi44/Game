@@ -24,6 +24,7 @@
 #include "Trees.h"
 #include "Signs.h"
 #include "Bus.h"
+#include "Island.h"
 
 
 class Game : public GameControl
@@ -111,6 +112,9 @@ public:
 		loadTexture("sign 4.png");
 		loadTexture("bus.png");
 		loadTexture("paper book.png");
+		loadTexture("top island.png");
+		loadTexture("middle island.png");
+		loadTexture("bottom island.png");
 
 		sounds = new std::vector<sf::Sound*>();
 		loadSound("take.wav");
@@ -156,6 +160,9 @@ public:
 		obstacleTypes->push_back([&] {return (new Car(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new Bus(this))->loadTexture(); });
 		obstacleTypes->push_back([&] {return (new PaperBook(this))->loadTexture(); });
+		for (int i = 0; i < 3; i++) {
+			obstacleTypes->push_back([&] {return (new Island(this))->loadTexture(); });
+		}
 
 		sideRoadObstacleTypes = new std::vector<std::function<Obstacle * ()>>();
 		for (int i = 0; i < 90; i++) {
@@ -164,7 +171,17 @@ public:
 		for (int i = 0; i < 10; i++) {
 			sideRoadObstacleTypes->push_back([&] {return (new Signs(this))->loadTexture(); });
 		}
-		sideRoadObstacleTypes->push_back([&] {return (obstacleTypes->at(rand() % obstacleTypes->size()))()->loadTexture(); });
+		sideRoadObstacleTypes->push_back([&] {
+			while (true) {
+				auto obstacle = (obstacleTypes->at(rand() % obstacleTypes->size()))()->loadTexture();
+				if (!obstacle->isComplex()) {
+					return obstacle;
+				}
+				else {
+					delete obstacle;
+				}
+			}
+			});
 
 	}
 
@@ -208,6 +225,10 @@ public:
 		score += value;
 	}
 
+	sf::RenderWindow* getWindow() {
+		return window;
+	}
+
 	void draw() {
 		window->clear();
 		auto windowSize = window->getSize();
@@ -230,10 +251,10 @@ public:
 			for (int j = lane->obstacles->size() - 1; j > -1; j--) {
 				auto obstacle = lane->obstacles->at(j);
 				auto pos = scrollPosition - obstacle->position;
-				if (pos > -obstacle->sprite->getLocalBounds().height && pos < window->getSize().y) {
-					obstacle->sprite->setPosition(lane->objectPosition, pos);
-					window->draw(*obstacle->sprite, sf::RenderStates::Default);
-					if (!end && cart->collision(obstacle)) {
+				if (pos > -obstacle->getHeight() && pos < window->getSize().y) {
+					obstacle->setPosition(lane->objectPosition, pos);
+					obstacle->draw();
+					if (!end && obstacle->collision(cart)) {
 						if (obstacle->colide()) {
 							lane->obstacles->erase(lane->obstacles->begin() + j);
 							delete obstacle;
@@ -321,14 +342,14 @@ public:
 
 	void generateLevel() {
 		//Generating main obstacles
-		auto levelPos = 0;
+		auto levelPos = window->getSize().y;
 		auto remObstacles = level * 5;
 		for (auto i = 0; i < remObstacles; i++) {
 			auto lane = rand() % (lanes->size() - 2) + 1;
 			auto obstacle = obstacleTypes->at(rand() % obstacleTypes->size())();
 			obstacle->position = scrollPosition + levelPos;
 			lanes->at(lane)->obstacles->push_back(obstacle);
-			levelPos += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 500;
+			levelPos += obstacle->getHeight() + cartHeight + rand() % 500;
 			//Increase difficulty at level 3 
 			if (level > 2) {
 				auto lane2 = rand() % (lanes->size() - 2) + 1;
@@ -358,17 +379,17 @@ public:
 			auto obstacle = sideRoadObstacleTypes->at(rand() % sideRoadObstacleTypes->size())();
 			obstacle->position = scrollPosition + left;
 			leftLane->obstacles->push_back(obstacle);
-			left += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 300;
+			left += obstacle->getHeight() + cartHeight + rand() % 300;
 		}
 
 		//Generating right side obstacles
 		auto right = 0;
-		auto rightLane = lanes->at(lanes->size()-1);
+		auto rightLane = lanes->at(lanes->size() - 1);
 		while (right < levelPos) {
 			auto obstacle = sideRoadObstacleTypes->at(rand() % sideRoadObstacleTypes->size())();
 			obstacle->position = scrollPosition + right;
 			rightLane->obstacles->push_back(obstacle);
-			right += obstacle->sprite->getLocalBounds().height + cartHeight + rand() % 300;
+			right += obstacle->getHeight() + cartHeight + rand() % 300;
 		}
 
 	}

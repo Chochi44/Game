@@ -35,10 +35,14 @@ public:
 	static const int TEXTURE_SIGN_4 = 25;
 	static const int TEXTURE_BUS = 26;
 	static const int TEXTURE_PAPER_BOOK = 27;
+	static const int TEXTURE_TOP_ISLAND = 28;
+	static const int TEXTURE_MIDDLE_ISLAND = 29;
+	static const int TEXTURE_BOTTOM_ISLAND = 30;
 
 	virtual void crash() = 0;
 	virtual void incrementScore(int value) = 0;
 	virtual void playSound(int sound) = 0;
 	virtual sf::Texture* getTexture(int texture) = 0;
+	virtual sf::RenderWindow* getWindow() = 0;
 };
 

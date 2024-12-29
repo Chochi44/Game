@@ -4,7 +4,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(500, 700), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(440, 700), "SFML works!");
 
 	Game* game = new Game(7, &window);
 

@@ -15,11 +15,6 @@ public:
 			sprite = sf::Sprite(*texture, sf::IntRect(0, 0, size.x, size.y));
 	}
 
-	bool collision(Obstacle* obstacle)
-	{
-		return sprite.getGlobalBounds().intersects(obstacle->sprite->getGlobalBounds());
-	}
-
 };
 
 
