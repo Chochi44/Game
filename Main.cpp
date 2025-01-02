@@ -8,6 +8,7 @@ int main()
 
 	Game* game = new Game(7, &window);
 
+	//Main game loop
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -44,8 +45,6 @@ int main()
 			game->draw();
 		}
 	}
-
-
 
 	return 0;
 

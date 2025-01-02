@@ -5,6 +5,7 @@
 #include "GameControl.h"
 #include "Cart.h"
 
+//Base class for all course obstacles
 class Obstacle
 {
 public:
@@ -68,7 +69,7 @@ public:
 
 	virtual bool collision(Cart* cart)
 	{
-		return sprite->getGlobalBounds().intersects(cart->sprite.getGlobalBounds());
+		return sprite->getGlobalBounds().intersects(cart->getBounds());
 	}
 };
 

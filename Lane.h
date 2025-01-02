@@ -8,7 +8,6 @@ class Lane
 public:
 	sf::Sprite* sprite;
 	sf::Texture* texture;
-	
 
 	int objectPosition;
 

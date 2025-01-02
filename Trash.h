@@ -3,6 +3,7 @@
 #include "Obstacle.h"
 #include "Game.h"
 
+//Base class for all course trash objects
 class Trash : public Obstacle
 {
 public:

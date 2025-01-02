@@ -2,6 +2,7 @@
 
 #include "Obstacle.h"
 
+//Base class for all course game ending obstacles
 class Pothole : public Obstacle
 {
 public:

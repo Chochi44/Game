@@ -1,6 +1,7 @@
 #pragma once
 #include "Pothole.h"
 
+//Complex obstacle build by multiple sprites
 class Island :
     public Pothole
 {
@@ -46,7 +47,7 @@ public:
 	bool collision(Cart* cart) override
 	{
 		for (auto sprite : sprites) {
-			if (sprite->getGlobalBounds().intersects(cart->sprite.getGlobalBounds())) {
+			if (sprite->getGlobalBounds().intersects(cart->getBounds())) {
 				return true;
 			}
 		}

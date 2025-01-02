@@ -26,9 +26,9 @@
 #include "Bus.h"
 #include "Island.h"
 
-
 class Game : public GameControl
 {
+private:
 	Cart* cart;
 	std::vector<Lane*>* lanes;
 	std::vector<sf::Sound*>* sounds;
@@ -37,35 +37,39 @@ class Game : public GameControl
 	sf::Font* font;
 	sf::RectangleShape* titleShape;
 	sf::Text* gameOverText;
+	sf::Text* levelUpText;
 	std::vector<std::function<Obstacle* ()>>* obstacleTypes;
 	std::vector<std::function<Obstacle* ()>>* sideRoadObstacleTypes;
 
 	float scrollPosition;
 
-public:
 	int score = 0;
 	int level = 0;
 	float velocity = 0.05f;
 	float laneWidth = 60.0f;
 	float cartWidth = 50.0f;
 	float cartHeight = 50.0f;
+
+public:
+	//Game state flags
 	bool title = true;
 	bool end = false;
 
-
 	Game(int lanesNum, sf::RenderWindow* window)
 	{
+		//Initializing game assets and objects
 		srand(time(0));
 		initAssets();
 		initObstacles();
 
 		this->window = window;
 		cart = new Cart(this);
-		cartWidth = cart->texture->getSize().x;
-		cartHeight = cart->texture->getSize().y;
+		cartWidth = cart->getWidth();
+		cartHeight = cart->getHeight();
 		lanes = new std::vector<Lane*>();
-		float cartPos = (laneWidth - cartWidth) / 2;
+		auto cartPos = (laneWidth - cartWidth) / 2;
 
+		//Setting up lanes
 		auto laneTexture = GameControl::TEXTURE_LEFT_SIDE;
 		auto lanePos = 0;
 		for (int i = 0; i < lanesNum; i++) {
@@ -79,9 +83,10 @@ public:
 			lanes->push_back(lane);
 			laneTexture = i == lanesNum - 2 ? GameControl::TEXTURE_RIGHT_SIDE : GameControl::TEXTURE_LANE;
 		}
-		cart->sprite.move(lanes->at(1)->objectPosition, window->getSize().y - cartHeight);
+		cart->move(lanes->at(1)->objectPosition, window->getSize().y - cartHeight);
 	}
 
+	//Loading images, sounds, fonts and creating text objects
 	void initAssets() {
 		textures = new std::vector<sf::Texture*>();
 		loadTexture("assets\\title bg.png");
@@ -139,9 +144,18 @@ public:
 		gameOverText->setOutlineColor(sf::Color::Green);
 		gameOverText->setFillColor(sf::Color::Black);
 		gameOverText->setOutlineThickness(3);
-		gameOverText->setString("GAME OVER!!!");
+		gameOverText->setString("GAME OVER");
+
+		levelUpText = new sf::Text();
+		levelUpText->setFont(*font);
+		levelUpText->setCharacterSize(70);
+		levelUpText->setOutlineColor(sf::Color(0, 255, 0, 32));
+		levelUpText->setFillColor(sf::Color(0, 0, 0, 32));
+		levelUpText->setOutlineThickness(3);
+		levelUpText->setStyle(sf::Text::Bold);
 	}
 
+	//Initializing obstacles vectors
 	void initObstacles() {
 		obstacleTypes = new std::vector<std::function<Obstacle * ()>>();
 		obstacleTypes->push_back([&] {return (new Pothole(this))->loadTexture(); });
@@ -196,7 +210,6 @@ public:
 		}
 	}
 
-
 	void loadSound(const std::string& filename) {
 		auto buffer = new sf::SoundBuffer();
 
@@ -217,6 +230,7 @@ public:
 		}
 	}
 
+	//End game
 	void crash() {
 		end = true;
 	}
@@ -233,9 +247,7 @@ public:
 		window->clear();
 		auto windowSize = window->getSize();
 
-		for (int i = 0; i < lanes->size(); i++) {
-			auto lane = lanes->at(i);
-
+		for (auto lane : *lanes) {
 			if (!end) {
 				//Scroll lane texture
 				lane->sprite->move(0.0f, velocity);
@@ -246,8 +258,19 @@ public:
 
 			//Draw lane
 			window->draw(*lane->sprite, sf::RenderStates::Default);
+		}
 
-			//Draw obstacles
+		//Draw level up text
+		if (levelUpText->getPosition().y < windowSize.y) {
+			if (!end) {
+				levelUpText->move(0, velocity);
+			}
+
+			window->draw(*levelUpText, sf::RenderStates::Default);
+		}
+
+		//Draw obstacles
+		for (auto lane : *lanes) {
 			for (int j = lane->obstacles->size() - 1; j > -1; j--) {
 				auto obstacle = lane->obstacles->at(j);
 				auto pos = scrollPosition - obstacle->position;
@@ -270,8 +293,9 @@ public:
 		}
 
 		//Draw cart
-		window->draw(cart->sprite, sf::RenderStates::Default);
+		cart->draw();
 
+		//Draw texts
 		drawText();
 
 		window->display();
@@ -290,7 +314,7 @@ public:
 		text.setOutlineThickness(2.0f);
 		text.setOutlineColor(sf::Color::Green);
 		auto bounds = text.getLocalBounds();
-		text.setPosition((size.x - bounds.width)/2, 20.0f);
+		text.setPosition((size.x - bounds.width) / 2, 20.0f);
 
 		window->draw(text);
 
@@ -304,8 +328,8 @@ public:
 
 	void moveCartLeft() {
 		for (int i = lanes->size() - 1; i > -1; i--) {
-			if (cart->sprite.getPosition().x > lanes->at(i)->objectPosition) {
-				cart->sprite.setPosition(lanes->at(i)->objectPosition, cart->sprite.getPosition().y);
+			if (cart->getPosition().x > lanes->at(i)->objectPosition) {
+				cart->setPosition(lanes->at(i)->objectPosition, cart->getPosition().y);
 				break;
 			}
 		}
@@ -313,8 +337,8 @@ public:
 
 	void moveCartRight() {
 		for (int i = 0; i < lanes->size(); i++) {
-			if (cart->sprite.getPosition().x < lanes->at(i)->objectPosition) {
-				cart->sprite.setPosition(lanes->at(i)->objectPosition, cart->sprite.getPosition().y);
+			if (cart->getPosition().x < lanes->at(i)->objectPosition) {
+				cart->setPosition(lanes->at(i)->objectPosition, cart->getPosition().y);
 				break;
 			}
 		}
@@ -324,6 +348,7 @@ public:
 		scrollPosition += velocity;
 	}
 
+	//Check for level ending
 	void checkLevel() {
 		int rem = 0;
 		for (auto lane : *lanes) {
@@ -335,6 +360,7 @@ public:
 		}
 	}
 
+	//Increase level
 	void levelUp() {
 		level++;
 		playSound(SOUND_LEVELUP);
@@ -394,6 +420,10 @@ public:
 			right += obstacle->getHeight() + cartHeight + rand() % 300;
 		}
 
+		//Reset level up text position
+		levelUpText->setString("LEVEL " + std::to_string(level));
+		auto bounds = levelUpText->getLocalBounds();
+		levelUpText->setPosition((window->getSize().x - bounds.width) / 2, -bounds.height);
 	}
 
 	void drawTitle() {
@@ -403,6 +433,7 @@ public:
 		window->display();
 	}
 
+	//Start the game
 	void start() {
 		score = 0;
 		level = 0;

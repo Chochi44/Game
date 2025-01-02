@@ -1,4 +1,5 @@
 #pragma once
+//Interface to give access to obstacle objects to global routines
 class GameControl
 {
 public:
