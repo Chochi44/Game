@@ -4,7 +4,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(440, 700), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(440, 700), "Trash master!");
 
 	Game* game = new Game(7, &window);
 

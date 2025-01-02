@@ -84,47 +84,47 @@ public:
 
 	void initAssets() {
 		textures = new std::vector<sf::Texture*>();
-		loadTexture("title.png");
-		loadTexture("general truck.png");
-		loadTexture("lane.png");
-		loadTexture("leftside.png");
-		loadTexture("rightside.png");
-		loadTexture("paper box.png");
-		loadTexture("hole.png");
-		loadTexture("glass cup.png");
-		loadTexture("plastic toy.png");
-		loadTexture("general trash.png");
-		loadTexture("general apple.png");
-		loadTexture("general diper.png");
-		loadTexture("glass bottle.png");
-		loadTexture("glass shards.png");
-		loadTexture("paper piece.png");
-		loadTexture("plastic straw.png");
-		loadTexture("plastic utensils.png");
-		loadTexture("stop sign.png");
-		loadTexture("car.png");
-		loadTexture("tree 1.png");
-		loadTexture("tree 2.png");
-		loadTexture("tree 3.png");
-		loadTexture("sign 1.png");
-		loadTexture("sign 2.png");
-		loadTexture("sign 3.png");
-		loadTexture("sign 4.png");
-		loadTexture("bus.png");
-		loadTexture("paper book.png");
-		loadTexture("top island.png");
-		loadTexture("middle island.png");
-		loadTexture("bottom island.png");
+		loadTexture("assets\\title bg.png");
+		loadTexture("assets\\general truck.png");
+		loadTexture("assets\\lane.png");
+		loadTexture("assets\\leftside.png");
+		loadTexture("assets\\rightside.png");
+		loadTexture("assets\\paper box.png");
+		loadTexture("assets\\hole.png");
+		loadTexture("assets\\glass cup.png");
+		loadTexture("assets\\plastic toy.png");
+		loadTexture("assets\\general trash.png");
+		loadTexture("assets\\general apple.png");
+		loadTexture("assets\\general diper.png");
+		loadTexture("assets\\glass bottle.png");
+		loadTexture("assets\\glass shards.png");
+		loadTexture("assets\\paper piece.png");
+		loadTexture("assets\\plastic straw.png");
+		loadTexture("assets\\plastic utensils.png");
+		loadTexture("assets\\stop sign.png");
+		loadTexture("assets\\car.png");
+		loadTexture("assets\\tree 1.png");
+		loadTexture("assets\\tree 2.png");
+		loadTexture("assets\\tree 3.png");
+		loadTexture("assets\\sign 1.png");
+		loadTexture("assets\\sign 2.png");
+		loadTexture("assets\\sign 3.png");
+		loadTexture("assets\\sign 4.png");
+		loadTexture("assets\\bus.png");
+		loadTexture("assets\\paper book.png");
+		loadTexture("assets\\top island.png");
+		loadTexture("assets\\middle island.png");
+		loadTexture("assets\\bottom island.png");
 
 		sounds = new std::vector<sf::Sound*>();
-		loadSound("take.wav");
-		loadSound("crash.wav");
-		loadSound("levelup.wav");
-		loadSound("missed.wav");
+		loadSound("assets\\take.wav");
+		loadSound("assets\\crash.wav");
+		loadSound("assets\\levelup.wav");
+		loadSound("assets\\missed.wav");
 
 		//Load font
 		font = new sf::Font();
-		if (!font->loadFromFile("tuffy.ttf"))
+		if (!font->loadFromFile("assets\\tuffy.ttf"))
 		{
 			std::cout << "Font not found!";
 			window->close();
@@ -136,8 +136,8 @@ public:
 		gameOverText = new sf::Text();
 		gameOverText->setFont(*font);
 		gameOverText->setCharacterSize(50);
-		gameOverText->setOutlineColor(sf::Color::Yellow);
-		gameOverText->setFillColor(sf::Color::Red);
+		gameOverText->setOutlineColor(sf::Color::Green);
+		gameOverText->setFillColor(sf::Color::Black);
 		gameOverText->setOutlineThickness(3);
 		gameOverText->setString("GAME OVER!!!");
 	}
@@ -286,9 +286,11 @@ public:
 		text.setCharacterSize(24); // in pixels, not points!
 
 		// set the color
-		text.setFillColor(sf::Color::White);
+		text.setFillColor(sf::Color::Black);
+		text.setOutlineThickness(2.0f);
+		text.setOutlineColor(sf::Color::Green);
 		auto bounds = text.getLocalBounds();
-		text.setPosition(size.x - bounds.width - 5.0f, 5.0f);
+		text.setPosition((size.x - bounds.width)/2, 20.0f);
 
 		window->draw(text);
 
