@@ -1,0 +1,140 @@
+﻿  Main.cpp
+C:\Users\chavd\source\Game\Obstacle.h(39,34): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\chavd\source\Game\Obstacle.h(39,34): warning C4244:         with
+C:\Users\chavd\source\Game\Obstacle.h(39,34): warning C4244:         [
+C:\Users\chavd\source\Game\Obstacle.h(39,34): warning C4244:             T=float
+C:\Users\chavd\source\Game\Obstacle.h(39,34): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Obstacle.h(43,34): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\chavd\source\Game\Obstacle.h(43,34): warning C4244:         with
+C:\Users\chavd\source\Game\Obstacle.h(43,34): warning C4244:         [
+C:\Users\chavd\source\Game\Obstacle.h(43,34): warning C4244:             T=float
+C:\Users\chavd\source\Game\Obstacle.h(43,34): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Island.h(17,44): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+C:\Users\chavd\source\Game\Island.h(17,44): warning C4244:         with
+C:\Users\chavd\source\Game\Island.h(17,44): warning C4244:         [
+C:\Users\chavd\source\Game\Island.h(17,44): warning C4244:             T=float
+C:\Users\chavd\source\Game\Island.h(17,44): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Island.h(20,46): warning C4244: '+=': conversion from 'T' to 'int', possible loss of data
+C:\Users\chavd\source\Game\Island.h(20,46): warning C4244:         with
+C:\Users\chavd\source\Game\Island.h(20,46): warning C4244:         [
+C:\Users\chavd\source\Game\Island.h(20,46): warning C4244:             T=float
+C:\Users\chavd\source\Game\Island.h(20,46): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Island.h(23,45): warning C4244: '+=': conversion from 'T' to 'int', possible loss of data
+C:\Users\chavd\source\Game\Island.h(23,45): warning C4244:         with
+C:\Users\chavd\source\Game\Island.h(23,45): warning C4244:         [
+C:\Users\chavd\source\Game\Island.h(23,45): warning C4244:             T=float
+C:\Users\chavd\source\Game\Island.h(23,45): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Island.h(31,41): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+C:\Users\chavd\source\Game\Island.h(31,41): warning C4244:         with
+C:\Users\chavd\source\Game\Island.h(31,41): warning C4244:         [
+C:\Users\chavd\source\Game\Island.h(31,41): warning C4244:             T=float
+C:\Users\chavd\source\Game\Island.h(31,41): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(61,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(67,29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(68,31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(78,35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(80,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(86,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(255,140): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\chavd\source\Game\Game.h(255,140): warning C4244:         with
+C:\Users\chavd\source\Game\Game.h(255,140): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(255,140): warning C4244:             T=unsigned int
+C:\Users\chavd\source\Game\Game.h(255,140): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(255,99): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\chavd\source\Game\Game.h(255,99): warning C4244:         with
+C:\Users\chavd\source\Game\Game.h(255,99): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(255,99): warning C4244:             T=unsigned int
+C:\Users\chavd\source\Game\Game.h(255,99): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(274,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(278,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(330,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(332,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(341,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(355,32): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(380,51): warning C4244: '+=': conversion from 'float' to 'T', possible loss of data
+C:\Users\chavd\source\Game\Game.h(380,51): warning C4244:         with
+C:\Users\chavd\source\Game\Game.h(380,51): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(380,51): warning C4244:             T=unsigned int
+C:\Users\chavd\source\Game\Game.h(380,51): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(406,15): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(410,47): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(416,16): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(420,48): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:         with
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:             T=unsigned int
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:         ]
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:         and
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:             T=float
+C:\Users\chavd\source\Game\Game.h(431,48): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         with
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:             T=unsigned int
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         ]
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         and
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         [
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:             T=float
+C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         ]
+  (compiling source file 'Main.cpp')
+  
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+C:\Users\chavd\source\Game\Obstacle.h(62): warning C4715: 'Obstacle::loadTexture': not all control paths return a value
+  All 904 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Game.vcxproj -> C:\Users\chavd\source\Game\x64\Release\Game.exe
