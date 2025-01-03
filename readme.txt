@@ -1,7 +1,7 @@
-# Trash Collector
+# Trash Master
 
 ## Overview
-Trash Collector is an arcade game where you control a garbage truck across multiple lanes. Navigate through streets, collect trash to earn points, and avoid obstacles that end your cleaning spree.
+Trash Master is an arcade game where you control a garbage truck across multiple lanes. Navigate through streets, collect trash to earn points, and avoid obstacles that end your cleaning spree.
 
 ## Game Features
 - Multi-lane gameplay environment with 7 total lanes:
