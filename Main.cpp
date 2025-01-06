@@ -4,7 +4,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(440, 700), "Trash master!");
+	sf::RenderWindow window(sf::VideoMode(440, 700), "Trash master!", sf::Style::Titlebar | sf::Style::Close);
 
 	Game* game = new Game(7, &window);
 

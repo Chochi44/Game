@@ -202,7 +202,7 @@ public:
 	void loadTexture(const std::string& filename) {
 		auto texture = new sf::Texture();
 		if (!texture->loadFromFile(filename)) {
-			std::cout << filename << " not found";
+			std::cout << filename << " not found\n";
 			textures->push_back(0);
 		}
 		else {
@@ -439,7 +439,7 @@ public:
 		level = 0;
 		title = false;
 		end = false;
-		velocity = 0.05f;
+		velocity = 0.1f;
 		for (auto lane : *lanes) {
 			lane->obstacles->clear();
 		}

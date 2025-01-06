@@ -133,8 +133,8 @@ C:\Users\chavd\source\Game\Game.h(431,40): warning C4244:         ]
   (compiling source file 'Main.cpp')
   
   Generating code
-  Previous IPDB not found, fall back to full compilation.
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
 C:\Users\chavd\source\Game\Obstacle.h(62): warning C4715: 'Obstacle::loadTexture': not all control paths return a value
-  All 904 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 905 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Game.vcxproj -> C:\Users\chavd\source\Game\x64\Release\Game.exe
